@@ -1,7 +1,7 @@
 # Experiment 1: Basic Single Page Application (SPA)
 
 ## Overview
-This project is developed as part of **Full Stack – II (23CSH-382)** for the **4th Semester (AI201)** at the **University Institute of Engineering, Department of AIT-CSE Core & AIML**.
+This project is developed as part of **Full Stack – II (23CSH-382)** for the **6th Semester (AI201)** at the **University Institute of Engineering, Department of AIT-CSE Core & AIML**.
 
 The objective of this experiment is to design and develop a **Single Page Application (SPA)** using a modern frontend framework (**React**) and tooling (**Vite**). The application demonstrates component-based architecture, client-side routing, state management using React hooks, API integration, and deployment using GitHub.
 
@@ -130,7 +130,7 @@ Can be deployed using:
 ## Submission Details
 Course: Full Stack – II (23CSH-382)  
 Experiment No: 1  
-Semester: 4th (AI201)  
+Semester: 6th (AI201)  
 Session: Jan–Jun 2026  
 Faculty: Mr. Prince Pal Singh  
 
