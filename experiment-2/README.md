@@ -1,13 +1,13 @@
-📌 Learning Outcomes
+🎯 Learning Outcomes
 
 By completing this project, you will be able to:
 
-Develop and utilize reusable React components effectively.
+✅ Create and use reusable React components
 
-Explore and implement various Material UI (MUI) components, including buttons, text fields, and their different variants.
+🎨 Understand and implement different Material UI (MUI) components, including buttons, text fields, and their variants
 
-Build a basic routing-based React application using multiple component types.
+🧭 Build a simple routing-based React application with multiple component types
 
-Apply fundamental UI styling techniques to enhance the visual structure of React applications.
+✨ Apply basic UI styling techniques in React
 
-Clearly document and explain the project structure in a simple and understandable manner.
+📄 Clearly document and explain the project structure in a simple and organized way
