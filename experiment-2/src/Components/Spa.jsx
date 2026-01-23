@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import Home from './Home';
-import About from './About';
-import Contact from './Contact';
+import Home from './Homes';
+import About from './Abouts';
+import Contact from './Contacts';
 
 export default function SinglePageApp() {
   return (
