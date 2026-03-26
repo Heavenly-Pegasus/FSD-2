@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
@@ -11,8 +13,8 @@ orders = [
         "order_status": "Shipped",
         "items": [
             {"name": "Laptop", "quantity": 1, "price": 2000},
-            {"name": "Mouse", "quantity": 2, "price": 250}
-        ]
+            {"name": "Mouse", "quantity": 2, "price": 250},
+        ],
     },
     {
         "id": 2,
@@ -21,8 +23,8 @@ orders = [
         "order_amount": 1200,
         "order_status": "Processing",
         "items": [
-            {"name": "Keyboard", "quantity": 1, "price": 1200}
-        ]
+            {"name": "Keyboard", "quantity": 1, "price": 1200},
+        ],
     },
     {
         "id": 3,
@@ -31,9 +33,9 @@ orders = [
         "order_amount": 800,
         "order_status": "Delivered",
         "items": [
-            {"name": "Headphones", "quantity": 1, "price": 800}
-        ]
-    }
+            {"name": "Headphones", "quantity": 1, "price": 800},
+        ],
+    },
 ]
 
 
@@ -45,29 +47,35 @@ def get_orders_by_user(user_id):
 
 @app.route("/orders/<int:order_id>/status", methods=["PUT"])
 def update_order_status(order_id):
-    data = request.get_json()
+    data = request.get_json() or {}
 
     new_status = data.get("order_status")
 
     if not new_status:
         return jsonify({"error": "order_status is required"}), 400
 
-    # Find order
     for order in orders:
         if order["id"] == order_id:
             order["order_status"] = new_status
             return jsonify({
                 "message": "Order status updated successfully",
-                "order": order
+                "order": order,
             })
 
     return jsonify({"error": "Order not found"}), 404
+
 
 @app.route("/")
 def home():
     return jsonify({"service": "Order Service Running"})
 
 
+@app.route("/health")
+def health():
+    return jsonify({"status": "healthy", "service": "order-service"})
+
+
 if __name__ == "__main__":
-    app.run(port=5002, debug=True)
-    
+    port = int(os.environ.get("PORT", 5002))
+    debug = os.environ.get("FLASK_DEBUG", "").lower() in ("1", "true", "yes")
+    app.run(host="0.0.0.0", port=port, debug=debug)
