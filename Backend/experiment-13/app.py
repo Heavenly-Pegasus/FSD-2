@@ -36,6 +36,11 @@ class Student(db.Model):
             "age": self.age,
         }
 
+
+# Ensure table exists in both local runs and gunicorn/Render startup.
+with app.app_context():
+    db.create_all()
+
 # ===============================
 # Validation Schema
 # ===============================
