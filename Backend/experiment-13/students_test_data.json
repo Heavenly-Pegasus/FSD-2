@@ -1,0 +1,24 @@
+{
+  "base_url": "http://127.0.0.1:5000",
+  "create_students": [
+    {
+      "uid": "CU001",
+      "name": "Aman Sharma",
+      "age": 21
+    },
+    {
+      "uid": "CU002",
+      "name": "Neha Verma",
+      "age": 20
+    },
+    {
+      "uid": "CU003",
+      "name": "Rohit Mehta",
+      "age": 22
+    }
+  ],
+  "update_student_example": {
+    "name": "Aman S.",
+    "age": 23
+  }
+}

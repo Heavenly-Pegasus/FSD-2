@@ -1,0 +1,139 @@
+{
+  "info": {
+    "name": "Experiment 13 - Students CRUD",
+    "_postman_id": "2dc3ab90-a10e-4c07-b9b3-16a0618f7c0f",
+    "description": "Postman collection for Flask + MySQL CRUD API (students).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Home",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Student",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"uid\": \"CU001\",\n  \"name\": \"Aman Sharma\",\n  \"age\": 21\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/students",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "students"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All Students",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/students",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "students"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Student By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/students/{{student_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "students",
+            "{{student_id}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Student",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Aman S.\",\n  \"age\": 22\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/students/{{student_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "students",
+            "{{student_id}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Student",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/students/{{student_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "students",
+            "{{student_id}}"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5000"
+    },
+    {
+      "key": "student_id",
+      "value": "1"
+    }
+  ]
+}
