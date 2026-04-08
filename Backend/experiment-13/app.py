@@ -12,7 +12,7 @@ app = Flask(__name__)
 # Use DATABASE_URL in Render; fallback for local development.
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
     "DATABASE_URL",
-    "mysql+pymysql://root:root123@localhost/chandigarh_university_db",
+    "mysql+pymysql://root:YOUR_LOCAL_PASSWORD@localhost/chandigarh_university_db",
 )
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
