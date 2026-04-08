@@ -1,123 +1,20 @@
-# Experiment 13 - Connect Backend with Database and Perform CRUD Operations
+# Student Management System - Flask MySQL CRUD API
 
-This experiment builds a Flask backend connected to MySQL and performs CRUD operations on a `students` table.
+## Learning Outcomes
+* **Created a Flask API for CRUD operations**: Built a complete system to Manage student data (Create, Read, Update, Delete) using simple web routes.
+* **Connected the app to a MySQL database**: Used SQLAlchemy to link the Python code to a database, allowing data to be saved and retrieved easily without writing raw SQL.
+* **Added data validation to prevent mistakes**: Used Marshmallow to check names, ages, and IDs, making sure the data entered is correct before saving it.
+* **Set up automatic error handling**: Created a way for the app to automatically catch errors (like missing data) and explain what went wrong in a clear way.
+* **Linked Python with MySQL**: Successfully established a connection between the application and a local MySQL server using the PyMySQL driver.
 
-## 1) Prerequisites
+## Render Deployment Settings
 
-- Python 3.8+
-- MySQL Server running on `localhost`
-- A MySQL database named `chandigarh_university_db`
+- Service Type: Web Service
+- Runtime: Python 3
+- Root Directory: `Backend/experiment-13`
+- Build Command: `pip install -r requirements.txt`
+- Start Command: `gunicorn app:app`
+- Environment Variable:
+  - `DATABASE_URL=mysql+pymysql://<username>:<password>@<host>:3306/chandigarh_university_db`
 
-Create database (if not already created):
-
-```sql
-CREATE DATABASE chandigarh_university_db;
-```
-
-## 2) Install Dependencies
-
-From this folder:
-
-```bash
-pip install -r requirements.txt
-```
-
-## 3) Configure Database Credentials
-
-In `app.py`, update this line if your MySQL username/password/host/database are different:
-
-```python
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:root123@localhost/chandigarh_university_db"
-```
-
-## 4) Run the Application
-
-```bash
-python app.py
-```
-
-The server starts at: `http://127.0.0.1:5000`
-
-## 5) API Endpoints
-
-- `GET /` - Health/info message
-- `POST /students` - Create student
-- `GET /students` - Get all students
-- `GET /students/<id>` - Get one student
-- `PUT /students/<id>` - Update student
-- `DELETE /students/<id>` - Delete student
-
-## 6) cURL Test Commands
-
-### Home Route
-
-```bash
-curl http://127.0.0.1:5000/
-```
-
-### Create Student
-
-```bash
-curl -X POST http://127.0.0.1:5000/students ^
-  -H "Content-Type: application/json" ^
-  -d "{\"uid\":\"CU001\",\"name\":\"Aman Sharma\",\"age\":21}"
-```
-
-### Get All Students
-
-```bash
-curl http://127.0.0.1:5000/students
-```
-
-### Get One Student (id = 1)
-
-```bash
-curl http://127.0.0.1:5000/students/1
-```
-
-### Update Student (id = 1)
-
-```bash
-curl -X PUT http://127.0.0.1:5000/students/1 ^
-  -H "Content-Type: application/json" ^
-  -d "{\"name\":\"Aman S.\",\"age\":22}"
-```
-
-### Delete Student (id = 1)
-
-```bash
-curl -X DELETE http://127.0.0.1:5000/students/1
-```
-
-## 7) Notes
-
-- The `students` table is auto-created by `db.create_all()` when the app starts.
-- `uid` is unique; duplicate values will raise a DB error.
-- Validation is handled using Marshmallow:
-  - `name`: minimum 2 characters
-  - `age`: 1 to 120
-  - `uid`: required
-
-## 8) Deploy on Render
-
-This folder is Render-ready with:
-
-- `render.yaml`
-- `Procfile`
-- `gunicorn` in `requirements.txt`
-
-### Render Environment Variable
-
-Set this in Render dashboard for your web service:
-
-- `DATABASE_URL` = your MySQL SQLAlchemy URL  
-  Example:
-  `mysql+pymysql://username:password@hostname:3306/chandigarh_university_db`
-
-### Start Command
-
-Render uses:
-
-```bash
-gunicorn app:app
-```
+This project is configured to use `DATABASE_URL` in production and a localhost fallback for local development.

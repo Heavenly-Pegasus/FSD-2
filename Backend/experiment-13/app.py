@@ -9,7 +9,7 @@ pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
 
-# Use DATABASE_URL on Render, otherwise use local MySQL default.
+# Use DATABASE_URL in Render; fallback for local development.
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
     "DATABASE_URL",
     "mysql+pymysql://root:root123@localhost/chandigarh_university_db",
@@ -17,7 +17,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-
 
 # ===============================
 # Student Model
@@ -37,7 +36,6 @@ class Student(db.Model):
             "age": self.age,
         }
 
-
 # ===============================
 # Validation Schema
 # ===============================
@@ -46,18 +44,15 @@ class StudentSchema(Schema):
     age = fields.Int(required=True, validate=validate.Range(min=1, max=120))
     uid = fields.Str(required=True)
 
-
 student_schema = StudentSchema()
 student_update_schema = StudentSchema(partial=True)
-
 
 # ===============================
 # Global Error Handler
 # ===============================
 @app.errorhandler(ValidationError)
-def handle_validation_error(error):
-    return jsonify({"validation_errors": error.messages}), 400
-
+def handle_validation_error(e):
+    return jsonify({"validation_errors": e.messages}), 400
 
 # ===============================
 # CREATE Student
@@ -73,7 +68,6 @@ def create_student():
 
     return jsonify(student.to_dict()), 201
 
-
 # ===============================
 # READ All Students
 # ===============================
@@ -82,7 +76,6 @@ def get_students():
     students = Student.query.all()
     return jsonify([s.to_dict() for s in students])
 
-
 # ===============================
 # READ One Student
 # ===============================
@@ -90,7 +83,6 @@ def get_students():
 def get_student(id):
     student = Student.query.get_or_404(id)
     return jsonify(student.to_dict())
-
 
 # ===============================
 # UPDATE Student
@@ -107,7 +99,6 @@ def update_student(id):
     db.session.commit()
     return jsonify(student.to_dict())
 
-
 # ===============================
 # DELETE Student
 # ===============================
@@ -117,7 +108,6 @@ def delete_student(id):
     db.session.delete(student)
     db.session.commit()
     return jsonify({"message": "Student deleted successfully"})
-
 
 @app.route("/")
 def home():

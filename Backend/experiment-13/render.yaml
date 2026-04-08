@@ -2,6 +2,7 @@ services:
   - type: web
     name: experiment-13-student-crud
     runtime: python
+    rootDir: Backend/experiment-13
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
     envVars:
