@@ -1,0 +1,8 @@
+Backend/__pycache__/
+Backend/.pytest_cache/
+Backend/.coverage
+Backend/htmlcov/
+Backend/test_students.db
+
+Frontend/node_modules/
+Frontend/coverage/

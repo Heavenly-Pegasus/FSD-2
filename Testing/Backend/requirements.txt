@@ -1,0 +1,6 @@
+Flask
+Flask-SQLAlchemy
+marshmallow
+PyMySQL
+pytest
+pytest-cov
