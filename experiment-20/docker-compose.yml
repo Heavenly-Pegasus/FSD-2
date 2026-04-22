@@ -1,0 +1,12 @@
+# Backend only. Uses SQL credentials from backend/.env (external DB).
+# From experiment-20/: docker compose up --build
+# API: http://localhost:5000
+
+services:
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
