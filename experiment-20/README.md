@@ -77,3 +77,21 @@ Then redeploy.
 - `POST /students`
 - `PUT /students/<id>`
 - `DELETE /students/<id>`
+
+## Output Screenshots
+
+### Frontend - Student Manager UI
+
+![Frontend Student Manager](./screenshots/frontend-student-manager.png)
+
+### POST /students in Postman
+
+![Postman POST Student](./screenshots/postman-post-student.png)
+
+### GET /students in Postman
+
+![Postman GET Students](./screenshots/postman-get-students.png)
+
+### Students table in MySQL Workbench
+
+![MySQL Workbench Students Table](./screenshots/mysql-workbench-students.png)

@@ -1,6 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000").replace(/\/$/, "");
+const configuredBase = (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000").replace(/\/$/, "");
+
+function fallbackBaseUrl(url) {
+  if (url.includes("localhost:5000")) {
+    return url.replace("localhost:5000", "127.0.0.1:5000");
+  }
+  return url;
+}
 
 const EMPTY_FORM = {
   name: "",
@@ -15,19 +22,36 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [apiBaseUrl, setApiBaseUrl] = useState(configuredBase);
+
+  const activeApiBase = useMemo(() => apiBaseUrl, [apiBaseUrl]);
+
+  const request = async (path, options = {}) => {
+    const url = `${activeApiBase}${path}`;
+    try {
+      return await fetch(url, options);
+    } catch (err) {
+      const fallback = fallbackBaseUrl(activeApiBase);
+      if (fallback !== activeApiBase) {
+        setApiBaseUrl(fallback);
+        return fetch(`${fallback}${path}`, options);
+      }
+      throw err;
+    }
+  };
 
   const fetchStudents = async () => {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch(`${API_BASE_URL}/students`);
+      const response = await request("/students");
       if (!response.ok) {
         throw new Error("Failed to load students");
       }
       const data = await response.json();
       setStudents(data);
     } catch (err) {
-      setError(err.message);
+      setError(`Cannot reach backend. Make sure API is running on ${activeApiBase}`);
     } finally {
       setLoading(false);
     }
@@ -67,10 +91,10 @@ function App() {
     }
 
     const method = editingId ? "PUT" : "POST";
-    const endpoint = editingId ? `${API_BASE_URL}/students/${editingId}` : `${API_BASE_URL}/students`;
+    const endpoint = editingId ? `/students/${editingId}` : "/students";
 
     try {
-      const response = await fetch(endpoint, {
+      const response = await request(endpoint, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -82,7 +106,7 @@ function App() {
       resetForm();
       await fetchStudents();
     } catch (err) {
-      setError(err.message);
+      setError(`Request failed. Confirm backend is reachable at ${activeApiBase}`);
     }
   };
 
@@ -99,7 +123,7 @@ function App() {
   const onDelete = async (id) => {
     setError("");
     try {
-      const response = await fetch(`${API_BASE_URL}/students/${id}`, { method: "DELETE" });
+      const response = await request(`/students/${id}`, { method: "DELETE" });
       if (!response.ok) {
         throw new Error("Delete failed");
       }
@@ -108,14 +132,14 @@ function App() {
         resetForm();
       }
     } catch (err) {
-      setError(err.message);
+      setError(`Delete failed. Confirm backend is reachable at ${activeApiBase}`);
     }
   };
 
   return (
     <main className="container">
       <h1>Experiment 20 - Student Manager</h1>
-      <p className="subtitle">Connected API: {API_BASE_URL}</p>
+      <p className="subtitle">Connected API: {activeApiBase}</p>
 
       <form className="card" onSubmit={onSubmit}>
         <h2>{editingId ? "Edit Student" : "Add Student"}</h2>
